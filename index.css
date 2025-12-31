@@ -6,12 +6,20 @@
   --red-text: #fc5d7c;
 }
 
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
 body {
   background-color: var(--primary-background);
 }
 
 #app {
-  width: 50%;
+  width: 80%;
+  height: 100%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -19,26 +27,50 @@ body {
 
 #statistic-container {
   display: flex;
+  flex: 1;
   justify-content: space-between;
   margin-bottom: 32px;
-  color: var(--secondary-text);
+  color: var(--primary-text);
 }
 
 #speed-value,
 #accuracy-value,
 #time-value {
-  color: var(--primary-text);
+  color: var(--secondary-text);
+}
+
+#caps-container {
+  position: relative;
+}
+
+.caps-alert {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  word-spacing: 0.2rem;
+  color: var(--primary-background);
+  border-radius: 4px;
+  background-color: var(--primary-text);
+  padding: 8px 12px;
 }
 
 #sentence-container {
+  flex: 2;
+  margin-top: 64px;
+  text-align: center;
   font-size: 24px;
   line-height: 45px;
   color: var(--white-text);
 }
 
-.current-letter::before {
-  content: "";
-  border-right: 2px solid grey;
+.cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 36px;
+  border-left: 2px solid grey;
+  transition: transform 0.1s;
 }
 
 .letter-correct {
@@ -81,4 +113,35 @@ body {
 
 #refresh-btn {
   margin-right: 24px;
+}
+
+footer {
+  display: flex;
+  flex: 1;
+}
+
+.shortcut-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  color: var(--primary-text);
+  font-size: 0.95rem;
+}
+
+.shortcut-container > p {
+  margin: 0 0 16px 0;
+  word-spacing: 0.3rem;
+}
+
+.highlighted {
+  color: var(--primary-background);
+  border-radius: 4px;
+  background-color: var(--primary-text);
+  padding: 2px 6px;
+}
+
+.hideable {
+  display: none;
 }

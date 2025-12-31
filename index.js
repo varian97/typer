@@ -1,12 +1,9 @@
-const textToType = "Lorem ipsum dolor sit amet";
-
 const sentenceContainer = document.querySelector("#sentence-container");
-const refreshButton = document.querySelector("#refresh-btn");
-const newTestButton = document.querySelector("#new-test-btn");
-
 const speedVal = document.querySelector("#speed-value");
 const accuracyVal = document.querySelector("#accuracy-value");
 const timeVal = document.querySelector("#time-value");
+const capsContainer = document.querySelector("#caps-container");
+const cursor = document.querySelector(".cursor");
 
 let letters = [];
 let pointer = 0;
@@ -15,6 +12,23 @@ let endTimer = null;
 let falseCount = 0;
 let typeCount = 0;
 let finished = false;
+let capsLockPressed = false;
+
+const generateQuote = () => {
+  return (
+    window.generateRandomQuote().split("-")[0].trim() ||
+    "Lorem ipsum dolor sit amet"
+  );
+};
+
+let textToType = generateQuote();
+
+const moveCursor = () => {
+  if (pointer < letters.length) {
+    const { top, left } = letters[pointer].getBoundingClientRect();
+    cursor.style.transform = `translate(${left - 4}px, ${top}px)`;
+  }
+};
 
 const resetGame = () => {
   document.activeElement?.blur();
@@ -31,6 +45,8 @@ const resetGame = () => {
   typeCount = 0;
   finished = false;
 
+  textToType = generateQuote();
+
   letters = Array.from(textToType).map((ch) => {
     const spanLetter = document.createElement("span");
     spanLetter.innerText = ch;
@@ -39,7 +55,8 @@ const resetGame = () => {
     return spanLetter;
   });
 
-  letters[0].classList.add("current-letter");
+  moveCursor();
+  cursor.classList.remove("hideable");
 };
 
 const calculateStats = () => {
@@ -86,17 +103,21 @@ const calculateStats = () => {
   };
 };
 
-document.addEventListener("keydown", (event) => {
-  const pressed = event.key;
+const toggleCapsLockAlert = (event) => {
+  capsContainer.classList.toggle(
+    "hideable",
+    !event.getModifierState("CapsLock")
+  );
+};
 
-  if (pressed === "Escape") {
-    event.preventDefault();
+const handleResetTest = (event) => {
+  if (event.key === "Escape") {
     resetGame();
   }
+};
 
-  if (finished) {
-    return;
-  }
+const handleCharacterTyped = (event) => {
+  const pressed = event.key;
 
   if (pressed.length === 1) {
     typeCount += 1;
@@ -118,25 +139,34 @@ document.addEventListener("keydown", (event) => {
     }
     pointer += 1;
   }
+};
+
+document.addEventListener("keyup", toggleCapsLockAlert);
+
+document.addEventListener("keydown", (event) => {
+  event.preventDefault();
+
+  handleResetTest(event);
+  toggleCapsLockAlert(event);
+
+  if (finished) {
+    return;
+  }
+
+  handleCharacterTyped(event);
 
   if (pointer === letters.length) {
     finished = true;
     endTimer = new Date();
-    letters[pointer - 1].classList.remove("current-letter");
+    cursor.classList.add("hideable");
 
     const { accuracy, speed, time } = calculateStats();
     accuracyVal.innerText = `${accuracy}%`;
     speedVal.innerText = `${speed} wpm`;
     timeVal.innerText = `${time}`;
   } else {
-    letters[pointer].classList.add("current-letter");
-    if (pointer > 0) {
-      letters[pointer - 1].classList.remove("current-letter");
-    }
+    moveCursor();
   }
 });
-
-refreshButton.addEventListener("click", resetGame);
-newTestButton.addEventListener("click", resetGame);
 
 resetGame();
