@@ -31,6 +31,7 @@ const moveCursor = () => {
     const { top, left } = letters[pointer].getBoundingClientRect();
     cursor.style.transform = `translate(${left - 4}px, ${top}px)`;
   }
+  cursor.classList.remove("hideable");
 };
 
 const resetGame = () => {
@@ -62,7 +63,6 @@ const resetGame = () => {
   });
 
   moveCursor();
-  cursor.classList.remove("hideable");
 };
 
 const calculateStats = () => {
@@ -127,6 +127,10 @@ const handleResetTest = (event) => {
 const handleCharacterTyped = (event) => {
   const pressed = event.key;
 
+  if (pressed === "'" || pressed === "/") {
+    event.preventDefault();
+  }
+
   if (pressed.length === 1) {
     typeCount += 1;
 
@@ -152,8 +156,6 @@ const handleCharacterTyped = (event) => {
 document.addEventListener("keyup", toggleCapsLockAlert);
 
 document.addEventListener("keydown", (event) => {
-  event.preventDefault();
-
   handleResetTest(event);
   toggleCapsLockAlert(event);
 
@@ -181,4 +183,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-resetGame();
+document.fonts.ready.then(() => {
+  resetGame();
+});
