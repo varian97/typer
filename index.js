@@ -1,8 +1,11 @@
-const sentenceContainer = document.querySelector("#sentence-container");
+const sentences = document.querySelector("#sentence-container");
+
+const statisticContainer = document.querySelector("#statistic-container");
 const speedVal = document.querySelector("#speed-value");
 const accuracyVal = document.querySelector("#accuracy-value");
 const timeVal = document.querySelector("#time-value");
-const capsContainer = document.querySelector("#caps-container");
+
+const capsContainer = document.querySelector(".caps-alert");
 const cursor = document.querySelector(".cursor");
 
 let letters = [];
@@ -33,10 +36,13 @@ const moveCursor = () => {
 const resetGame = () => {
   document.activeElement?.blur();
 
-  sentenceContainer.innerHTML = "";
+  statisticContainer.classList.add("hideable");
   speedVal.innerText = "-";
   accuracyVal.innerText = "-";
   timeVal.innerText = "-";
+
+  sentences.classList.remove("hideable");
+  sentences.innerHTML = "";
 
   pointer = 0;
   startTimer = null;
@@ -50,7 +56,7 @@ const resetGame = () => {
   letters = Array.from(textToType).map((ch) => {
     const spanLetter = document.createElement("span");
     spanLetter.innerText = ch;
-    sentenceContainer.appendChild(spanLetter);
+    sentences.appendChild(spanLetter);
 
     return spanLetter;
   });
@@ -104,10 +110,12 @@ const calculateStats = () => {
 };
 
 const toggleCapsLockAlert = (event) => {
-  capsContainer.classList.toggle(
-    "hideable",
-    !event.getModifierState("CapsLock")
-  );
+  if (!finished) {
+    capsContainer.classList.toggle(
+      "hideable",
+      !event.getModifierState("CapsLock")
+    );
+  }
 };
 
 const handleResetTest = (event) => {
@@ -158,12 +166,16 @@ document.addEventListener("keydown", (event) => {
   if (pointer === letters.length) {
     finished = true;
     endTimer = new Date();
-    cursor.classList.add("hideable");
 
     const { accuracy, speed, time } = calculateStats();
     accuracyVal.innerText = `${accuracy}%`;
     speedVal.innerText = `${speed} wpm`;
     timeVal.innerText = `${time}`;
+
+    cursor.classList.add("hideable");
+    sentences.classList.add("hideable");
+
+    statisticContainer.classList.remove("hideable");
   } else {
     moveCursor();
   }

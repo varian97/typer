@@ -15,6 +15,8 @@ body {
 
 body {
   background-color: var(--primary-background);
+  font-family: "Atkinson Hyperlegible Mono", sans-serif;
+  font-optical-sizing: auto;
 }
 
 #app {
@@ -26,10 +28,7 @@ body {
 }
 
 #statistic-container {
-  display: flex;
-  flex: 1;
   justify-content: space-between;
-  margin-bottom: 32px;
   color: var(--primary-text);
 }
 
@@ -39,25 +38,23 @@ body {
   color: var(--secondary-text);
 }
 
-#caps-container {
-  position: relative;
-}
-
 .caps-alert {
   position: absolute;
   left: 50%;
-  top: 0;
+  top: 25%;
   transform: translateX(-50%);
   word-spacing: 0.2rem;
   color: var(--primary-background);
   border-radius: 4px;
   background-color: var(--primary-text);
   padding: 8px 12px;
+  margin: 0;
 }
 
-#sentence-container {
-  flex: 2;
-  margin-top: 64px;
+#middle-container {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
   text-align: center;
   font-size: 24px;
   line-height: 45px;
@@ -117,7 +114,7 @@ body {
 
 footer {
   display: flex;
-  flex: 1;
+  padding-bottom: 32px;
 }
 
 .shortcut-container {

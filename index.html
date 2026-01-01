@@ -3,31 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/typer.png">
     <link rel="stylesheet" href="index.css">
-    <title>Typer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@300&display=swap" rel="stylesheet">
+    <title>Typer | Simple Typing Test</title>
 </head>
 <body>
     <main id="app">
-        <div id="statistic-container">
-            <div class="horizontal-container">
-                <h3 id="speed-label">Speed</h3>
-                <h3 id="speed-value">-</h3>
-            </div>
-            <div class="horizontal-container">
-                <h3 id="accuracy-label">Accuracy</h3>
-                <h3 id="accuracy-value">-</h3>
-            </div>
-            <div class="horizontal-container">
-                <h3 id="time-label">Time</h3>
-                <h3 id="time-value">-</h3>
-            </div>
-        </div>
-
-        <div id="caps-container" class="hideable">
-            <p class="caps-alert">CapsLock On</p>
-        </div>
+        <p class="caps-alert hideable">CapsLock On</p>
         <span class="cursor"></span>
-        <div id="sentence-container"></div>
+        <div id="middle-container">
+            <div id="statistic-container" class="hideable">
+                <div class="horizontal-container">
+                    <h3 id="speed-label">Speed</h3>
+                    <h3 id="speed-value">-</h3>
+                </div>
+                <div class="horizontal-container">
+                    <h3 id="accuracy-label">Accuracy</h3>
+                    <h3 id="accuracy-value">-</h3>
+                </div>
+                <div class="horizontal-container">
+                    <h3 id="time-label">Time</h3>
+                    <h3 id="time-value">-</h3>
+                </div>
+            </div>
+            <div id="sentence-container"></div>
+        </div>
 
         <footer>
             <div class="shortcut-container">
@@ -36,6 +39,6 @@
         </footer>
     </main>
     <script src=" https://cdn.jsdelivr.net/npm/rajan-random-quote@1.0.0/index.min.js "></script>
-    <script type="module" src="index.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
