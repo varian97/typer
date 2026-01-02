@@ -131,7 +131,12 @@ const handleCharacterTyped = (event) => {
     event.preventDefault();
   }
 
-  if (pressed.length === 1) {
+  if (pressed === "Backspace" && pointer > 0) {
+    pointer -= 1;
+    letters[pointer].classList.remove("letter-correct");
+    letters[pointer].classList.remove("letter-false");
+    letters[pointer].classList.remove("letter-false-space");
+  } else if (pressed.length === 1) {
     typeCount += 1;
 
     if (startTimer === null) {
