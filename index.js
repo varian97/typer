@@ -17,6 +17,16 @@ let typeCount = 0;
 let finished = false;
 let capsLockPressed = false;
 
+const registerServiceWorker = () => {
+  if ("serviceWorker" in navigator) {
+    try {
+      navigator.serviceWorker.register("/sw.js");
+    } catch (err) {
+      console.error(`Failed to register service worker: ${err}`);
+    }
+  }
+};
+
 const generateQuote = () => {
   return (
     window.generateRandomQuote().split("-")[0].trim() ||
@@ -191,3 +201,5 @@ document.addEventListener("keydown", (event) => {
 document.fonts.ready.then(() => {
   resetGame();
 });
+
+registerServiceWorker();
