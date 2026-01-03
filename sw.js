@@ -22,7 +22,6 @@ const deleteOldCaches = async () => {
 };
 
 const handleFetch = async ({ request, event }) => {
-  console.log("handle fetch");
   const cachedData = await caches.match(request);
   if (cachedData) {
     return cachedData;
@@ -44,7 +43,12 @@ const handleFetch = async ({ request, event }) => {
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    addResourcesToCache(["index.html", "index.css", "index.js", "typer.png"])
+    addResourcesToCache([
+      "/typer/index.html",
+      "/typer/index.css",
+      "/typer/index.js",
+      "/typer/typer.png",
+    ])
   );
 });
 

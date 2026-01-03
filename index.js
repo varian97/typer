@@ -20,7 +20,7 @@ let capsLockPressed = false;
 const registerServiceWorker = () => {
   if ("serviceWorker" in navigator) {
     try {
-      navigator.serviceWorker.register("/sw.js");
+      navigator.serviceWorker.register("/typer/sw.js", { scope: "/typer/" });
     } catch (err) {
       console.error(`Failed to register service worker: ${err}`);
     }
