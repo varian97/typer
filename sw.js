@@ -23,15 +23,15 @@ const deleteOldCaches = async () => {
 
 const handleFetch = async ({ request, event }) => {
   const cache = await caches.open(cacheVersion);
-  const cachedData = await cache.match(request);
-
-  if (cachedData) {
-    return cachedData;
-  }
 
   if (request.mode === "navigate") {
     const cachedPage = await cache.match("/typer/index.html");
     if (cachedPage) return cachedPage;
+  }
+
+  const cachedData = await cache.match(request);
+  if (cachedData) {
+    return cachedData;
   }
 
   try {
