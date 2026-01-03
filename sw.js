@@ -29,6 +29,11 @@ const handleFetch = async ({ request, event }) => {
     return cachedData;
   }
 
+  if (request.mode === "navigate") {
+    const cachedPage = await cache.match("/typer/index.html");
+    if (cachedPage) return cachedPage;
+  }
+
   try {
     const res = await fetch(request);
     event.waitUntil(putInCache(request, res.clone()));
