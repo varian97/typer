@@ -6,7 +6,7 @@ const addResourcesToCache = async (resources) => {
 };
 
 const putInCache = async (request, response) => {
-  const cache = await caches.open("v1");
+  const cache = await caches.open(cacheVersion);
   await cache.put(request, response);
 };
 
@@ -22,7 +22,9 @@ const deleteOldCaches = async () => {
 };
 
 const handleFetch = async ({ request, event }) => {
-  const cachedData = await caches.match(request);
+  const cache = await caches.open(cacheVersion);
+  const cachedData = await cache.match(request);
+
   if (cachedData) {
     return cachedData;
   }
@@ -44,6 +46,7 @@ const handleFetch = async ({ request, event }) => {
 self.addEventListener("install", (e) => {
   e.waitUntil(
     addResourcesToCache([
+      "/typer/",
       "/typer/index.html",
       "/typer/index.css",
       "/typer/index.js",
