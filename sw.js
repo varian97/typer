@@ -65,5 +65,9 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
+  // Skip non-GET requests and browser extensions
+  if (e.request.method !== "GET") return;
+  if (e.request.url.startsWith("chrome-extension://")) return;
+
   e.respondWith(handleFetch({ request: e.request, event: e }));
 });
